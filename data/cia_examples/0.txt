@@ -1,0 +1,8 @@
+Please describe the image according to the following instructions:
+
+View: Describe the image from the perspective of an observer at a political event.
+Sentiment: Convey a sense of excitement and energy typical of political rallies.
+Object Details: Highlight the presence of two prominent political figures, their attire, and the enthusiastic crowd in the background.
+Format: Provide a description within 100 words, using complete sentences.
+Lexical Constraints: Include terms such as "political rally," "crowd," and "enthusiasm."
+Search Constraints: This appears to be a political campaign, please search the Internet for additional information.

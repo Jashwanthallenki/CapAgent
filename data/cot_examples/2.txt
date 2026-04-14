@@ -1,0 +1,29 @@
+# EXAMPLE: Captioning an image with more than 50 words with keyword constraint.
+# USER IMAGE stored in example_image_data as ImageData.
+# USER REQUEST #: Please captioning this image with more than 50 words and include the words "tabby cat" and "orange".
+# RESULT #:
+THOUGHT 0: First, I need to use visual question answering tool to get the caption of the image. 
+ACTION 0:
+```python
+caption = visual_question_answering(query="Please describe this image.", image_data=example_image_data)
+```
+OBSERVATION: Execution success. The output is as follows:
+Caption: The image shows a close-up of an orange tabby cat.
+THOUGHT 1: The caption already includes the words "tabby cat" and "orange". I need to check if the caption is longer than 50 words.
+ACTION 1:
+```python
+count_words(caption=caption)
+```
+OBSERVATION: Execution success. The output is as follows:
+The number of words in the caption is: 11
+THOUGHT 2: The caption is shorter than 50 words. I need to use the extend_caption tool to ask and answer questions to detail the caption.
+ACTION 2:
+```python
+extend_caption(image_data=example_image_data, caption=caption, iteration=3)
+```
+OBSERVATION: Execution success. The output is as follows:
+Caption: The image shows a close-up of an orange tabby cat with well-groomed and fluffy fur, particularly noticeable on the neck and the visible part of the back, which has a smooth and healthy sheen. The cat's expression seems alert and possibly playful, with a wide-open mouth and visible teeth, indicating a vocalization that could be a playful meow or a yawn.
+The number of words in the shortened caption is: 68
+THOUGHT 3: The caption is longer than 50 words. Now I can answer the user's request.
+ACTION 3: No action needed.
+ANSWER: The image shows a close-up of an orange tabby cat with well-groomed and fluffy fur, particularly noticeable on the neck and the visible part of the back, which has a smooth and healthy sheen. The cat's expression seems alert and possibly playful, with a wide-open mouth and visible teeth, indicating a vocalization that could be a playful meow or a yawn. TERMINATE

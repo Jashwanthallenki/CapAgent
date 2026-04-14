@@ -1,0 +1,21 @@
+# EXAMPLE: Captioning an image with positive sentiment.
+# USER IMAGE stored in example_image_data as ImageData.
+# USER REQUEST #: Please captioning this image with positive sentiment.
+# RESULT #:
+THOUGHT 0: First, I need to use visual question answering tool to get the caption of the image. Then I need to use LLM to transfer this caption to a positive sentiment.
+ACTION 0:
+```python
+caption = visual_question_answering(query="Please describe this image.", image_data=example_image_data)
+```
+OBSERVATION: Execution success. The output is as follows:
+Caption: A man is playing with her girlfriend.
+THOUGHT 1: I need to use LLM to transfer this caption to a positive sentiment.
+ACTION 1:
+```python
+result = change_caption_sentiment(caption=caption, sentiment="positive")
+```
+OBSERVATION: Execution success. The output is as follows:
+Caption: A man is happily playing with his girlfriend.
+THOUGHT 3: The caption is in positive sentiment. Now I can answer the user's request.
+ACTION 3: No action needed.
+ANSWER: A man is happily playing with his girlfriend. TERMINATE

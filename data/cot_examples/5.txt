@@ -1,0 +1,21 @@
+# EXAMPLE: Describe the spatial position of the objects in the image.
+# USER IMAGE stored in example_image_data as ImageData.
+# USER REQUEST #: Please describe the position of the objects in the image.
+# RESULT #:
+THOUGHT 0: First, I need to use visual question answering tool to what's in the image to get object tags. 
+ACTION 0:
+```python
+visual_question_answering(query="List the objects in the image.", image_data=example_image_data)
+```
+OBSERVATION: Execution success. The output is as follows:
+Objects: chair, laptop, cushion
+THOUGHT 1: Now I need to use the spatial_relation_of_objects tool to describe the spatial position of the objects in the image.
+ACTION 1:
+```python
+spatial_relation_of_objects(image_data=example_image_data, objects=["chair", "laptop", "cushion"], show_result=True)
+```
+OBSERVATION: Execution success. The output is as follows:
+The chair is in the center of the image, facing the laptop. The laptop is on the right side of the chair. The cushion is on the left side of the chair.
+THOUGHT 2: Now I can answer the user's request.
+ACTION 2: No action needed.
+ANSWER: The chair is in the center of the image, facing the laptop. The laptop is on the right side of the chair. The cushion is on the left side of the chair. TERMINATE

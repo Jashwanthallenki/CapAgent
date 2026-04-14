@@ -1,0 +1,35 @@
+# EXAMPLE: Captioning an image about a political event.
+# USER IMAGE stored in example_image_data as ImageData.
+# USER REQUEST #: Please create a detailed description of the image, focusing on the two central figures. Highlight their attire, expressions, and gestures, noting any significant interactions with the crowd. Mention the background elements, such as the signs and supporters, to provide context. Here are some constraints
+Semantic Constraints: Maintain neutrality and objectivity.
+Format Constraints: Use a structured paragraph format.
+Content Constraints: Focus on attire, expressions, gestures, and crowd interactions. Avoid speculative or unrelated details.
+Search Constraints: This seems to be a political event, you should search it on web.
+# RESULT #:
+THOUGHT 0: First, I need to use visual question answering tool to get the caption of the image. Then I need to search the image on the web to gain more information.
+ACTION 0:
+```python
+caption = visual_question_answering(query="Please describe this image.", image_data=example_image_data)
+```
+OBSERVATION: Execution success. The output is as follows:
+Caption: The image is a split-screen comparison of two individuals who appear to be political figures. On the left side, there is a man in a suit with a red tie, and on the right side, there is a woman in a blue blazer. Both are smiling and appear to be at political rallies or events, as indicated by the signs and the crowd in the background. The image is likely used to compare the two individuals, possibly in the context of a political campaign or election.
+THOUGHT 1: To figure out the events shown in the picture, I need to use the search_image_on_web tool to make the caption more informative.
+ACTION 1:
+```python
+google_lens_search(image_data=example_image_data)
+```
+OBSERVATION: Execution success. The output is as follows:
+Search result: 
+FOX 5 NY | After her defeat to Donald Trump, should Kamala Harris attempt a second run for the White House in 2028? Comment below! #fox5ny... | Instagram
+Bombshell Iowa poll puts Harris ahead of Trump in state he has won twice | The Independent
+Video Harris attacks Trump’s vow to ‘protect women’ whether they ‘like it or not’ - ABC News
+THOUGHT 2: The man on the left is Donald Trump, and the woman on the right is Kamala Harris, and they are at campaign events. I need to integrate this information into caption. I use the add_keywords_to_caption tool to do this.
+ACTION 2:
+```python
+add_keywords_to_caption(caption=caption, keywords=["The man on the left is Donald Trump", "the woman on the right is Kamala Harris", "campaign events"])
+```
+OBSERVATION: Execution success. The output is as follows:
+Recaption: The split-screen image highlights two prominent political figures at campaign events. On the left, former President Donald Trump, dressed in a suit with a red tie, smiles amid a cheering crowd, while on the right, Vice President Kamala Harris, wearing a blue blazer, appears equally energized as she engages with her supporters. With signs and rally attendees in the background, the scene underscores a visual comparison of the two figures, possibly reflecting contrasting positions in an electoral or political context.
+THOUGHT 3: The caption is already in a neutral tone. No further action is needed.
+ACTION 3: No action needed.
+ANSWER: The split-screen image highlights two prominent political figures at campaign events. On the left, former President Donald Trump, dressed in a suit with a red tie, smiles amid a cheering crowd, while on the right, Vice President Kamala Harris, wearing a blue blazer, appears equally energized as she engages with her supporters. With signs and rally attendees in the background, the scene underscores a visual comparison of the two figures, possibly reflecting contrasting positions in an electoral or political context. TERMINATE

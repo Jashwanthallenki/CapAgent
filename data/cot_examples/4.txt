@@ -1,0 +1,24 @@
+# EXAMPLE: Captioning an image with no more than one sentence.
+# USER IMAGE stored in example_image_data as ImageData.
+# USER REQUEST #: Please captioning this image within 10 words.
+# RESULT #:
+THOUGHT 0: First, I need to use visual question answering tool to get the caption of the image. Then I need to check the number of sentences in the caption. If the number of sentences is more than 1, I need to use the shorten_caption tool to shorten the caption. Otherwise, there is no need to shorten the caption.
+ACTION 0:
+```python
+caption = visual_question_answering(query="Please describe this image briefly.", image_data=example_image_data)
+count_words(caption=caption)
+```
+OBSERVATION: Execution success. The output is as follows:
+Caption: In the image, there are two black, rectangular mesh wastebaskets centrally placed, side by side. The wastebaskets are identical, both featuring a sleek and modern design.
+Now the number of sentences in the caption is: 2
+THOUGHT 1: Since the number of sentences in the caption is more than 1, I need to use the shorten_caption tool to shorten the caption.
+ACTION 1:
+```python
+result = shorten_caption(request="Please captioning this image within 10 words.", caption=caption, max_sentences=1)
+```
+OBSERVATION: Execution success. The output is as follows:
+A photo of two black mesh wastebaskets.
+Now the number of sentences in the caption is: 1
+THOUGHT 3: The number of sentences in the shortened caption is less than 1. Now I can answer the user's request.
+ACTION 3: No action needed.
+ANSWER: A photo of two black mesh wastebaskets. TERMINATE
