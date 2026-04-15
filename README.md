@@ -100,7 +100,7 @@ CapAgent follows a **three-stage agent pipeline**:
             ┌────────────────────┐
             │   Final Caption    │
             └────────────────────┘
-
+```
 🔧 Tools & Models Used
 GroundingDINO → Object detection & localization
 Depth-Anything-V2 → Depth estimation
