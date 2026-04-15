@@ -134,56 +134,80 @@ pip install -r requirements.txt
 export OPENAI_API_KEY=<your-openai-api-key>
 export SERP_API_KEY=<your-serp-api-key>  # optional
 
-🧪 Install Expert Models
-GroundingDINO
-cd expert_models
-git clone https://github.com/IDEA-Research/GroundingDINO.git
-cd GroundingDINO
+## 🧪 Install Expert Models
 
-conda create -n groundingdino python=3.10
-conda activate groundingdino
-pip install -e .
-Depth-Anything-V2
-cd ../
-git clone https://github.com/DepthAnything/Depth-Anything-V2.git
-cd Depth-Anything-V2
+### GroundingDINO
+cd expert_models  
+git clone https://github.com/IDEA-Research/GroundingDINO.git  
+cd GroundingDINO  
 
-conda create -n depthanything python=3.10
-conda activate depthanything
-pip install -e .
+conda create -n groundingdino python=3.10  
+conda activate groundingdino  
+pip install -e .  
 
-python app.py
+### Depth-Anything-V2
+cd ../  
+git clone https://github.com/DepthAnything/Depth-Anything-V2.git  
+cd Depth-Anything-V2  
 
-▶️ Running the Project
-Start Image Server
-python launch_image_server.py
-Run Inference
-python run.py
-Gradio Demo
-python gradio_demo.py
-🧠 RAG Setup
+conda create -n depthanything python=3.10  
+conda activate depthanything  
+pip install -e .  
 
-Generate embeddings for Chain-of-Thought examples:
+python app.py  
 
-bash init_rag_database.sh
+---
 
-📊 Advantages
-✅ High-quality captions
-✅ Better reasoning using tools
-✅ Modular and scalable
-✅ Improved controllability
-⚠️ Limitations
-❌ Higher latency due to multiple tool calls
-❌ Increased system complexity
-❌ Higher cost (LLM + APIs + models)
-❌ Error propagation across tools
-🔮 Future Work
-Add more expert tools (segmentation, OCR, etc.)
-Improve reasoning with advanced agent frameworks
-Optimize latency and cost
-Extend to video and multi-image understanding
+## ▶️ Running the Project
 
-🙌 Acknowledgements
-GroundingDINO
-Depth-Anything-V2
-VisualSketchPad
+### Start Image Server
+python launch_image_server.py  
+
+### Run Inference
+python run.py  
+
+### Gradio Demo
+python gradio_demo.py  
+
+---
+
+## 🧠 RAG Setup
+
+Generate embeddings for Chain-of-Thought examples:  
+
+bash init_rag_database.sh  
+
+---
+
+## 📊 Advantages
+
+- High-quality captions  
+- Better reasoning using tools  
+- Modular and scalable  
+- Improved controllability  
+
+---
+
+## ⚠️ Limitations
+
+- Higher latency due to multiple tool calls  
+- Increased system complexity  
+- Higher cost (LLM + APIs + models)  
+- Error propagation across tools  
+
+---
+
+## 🔮 Future Work
+
+- Add more expert tools (segmentation, OCR, etc.)  
+- Improve reasoning with advanced agent frameworks  
+- Optimize latency and cost  
+- Extend to video and multi-image understanding  
+
+---
+
+## 🙌 Acknowledgements
+
+- GroundingDINO  
+- Depth-Anything-V2  
+- VisualSketchPad  
