@@ -122,7 +122,7 @@ Generate caption
 Output:
 
 "A brown dog playing with a ball in the foreground of a park, with trees and people in the background."
-⚙️ Installation
+
 1. Clone Repository
 git clone <repo-url>
 cd CapAgent
@@ -133,6 +133,7 @@ pip install -r requirements.txt
 3. Set API Keys
 export OPENAI_API_KEY=<your-openai-api-key>
 export SERP_API_KEY=<your-serp-api-key>  # optional
+
 🧪 Install Expert Models
 GroundingDINO
 cd expert_models
@@ -152,6 +153,7 @@ conda activate depthanything
 pip install -e .
 
 python app.py
+
 ▶️ Running the Project
 Start Image Server
 python launch_image_server.py
@@ -164,6 +166,7 @@ python gradio_demo.py
 Generate embeddings for Chain-of-Thought examples:
 
 bash init_rag_database.sh
+
 📊 Advantages
 ✅ High-quality captions
 ✅ Better reasoning using tools
