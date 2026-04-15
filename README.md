@@ -1,127 +1,186 @@
-# CapAgent <img src="assets/readme/pencil.png" width="25"/>
+# 🚀 CapAgent: Controllable Image Captioning Agent
 
-## Introduction
+CapAgent is an **agent-based image captioning system** that transforms simple user instructions into **professional, detailed, and context-aware captions**.
 
-This is the repo for CapAgent, an agent system with a variety of tools specifically designed to control the image captioning process. 
-Users often give simple instructions like 'please describe the image,' but they expect detailed, meaningful outputs. The challenges lie in transforming these vague inputs into professional instructions and generating descriptions that align precisely with user needs. CapAgent addresses this by refining user inputs automatically and leveraging tools to ensure captions meet expectations effectively. The technical report for CapAgent is [here](https://arxiv.org/abs/2412.11025). We'll continue to update this repo and add more tools.
-<div align="center">
-<img src="assets/readme/intro.png">
-</div>
+It bridges the gap between **vague user queries** and **high-quality outputs** by combining:
+- Query refinement
+- Tool-based reasoning
+- Multimodal understanding
 
-## Methodology
-As shown in the following figure, like a general agent, CapAgent’s workflow includes three main steps: planning, tool usage, and observation. When the user inputs an image and a caption query, the CapAgent will generate a series of thoughts and corresponding actions to tackle the user request. 
-<div align="center">
-<img src="assets/readme/method.png"/>
-</div>
+---
 
-## Prepare environment
+## 📌 Motivation
 
+Users often provide minimal instructions like:
 
-### Set API Key
-```bash
-export SERP_API_KEY=<your-serp-api-key> # for search image on web
-export OPENAI_API_KEY=<your-openai-api-key> # for using gpt-4o
-```
+> "Describe this image"
 
-### Install dependencies
+But expect:
+- Rich descriptions  
+- Context awareness  
+- Spatial relationships  
+- High semantic quality  
 
-```bash
+Traditional captioning models struggle with this mismatch.
+
+👉 **CapAgent solves this by automatically refining user intent and orchestrating expert tools.**
+
+---
+
+## 🧠 Key Features
+
+- ✨ **Automatic Instruction Refinement**  
+  Converts simple queries into structured, professional prompts  
+
+- 🧩 **Agent-Based Architecture**  
+  Planning → Tool Usage → Observation  
+
+- 🛠️ **Tool-Augmented Reasoning**  
+  Uses specialized vision models for better understanding  
+
+- 🔄 **RAG-based Reasoning Support**  
+  Retrieves past reasoning examples to guide decisions  
+
+- ⚙️ **Modular & Extensible**  
+  Easily plug in new tools and models  
+
+---
+
+## 🏗️ System Architecture
+
+CapAgent follows a **three-stage agent pipeline**:
+
+### 1. Planning
+- Understands user query + image  
+- Breaks task into sub-steps  
+
+### 2. Tool Usage
+- Dynamically invokes expert models:
+  - Object detection  
+  - Depth estimation  
+  - External search (optional)  
+
+### 3. Observation
+- Aggregates outputs from tools  
+- Generates final caption using an LLM  
+
+---
+
+## 🧭 Architecture Diagram
+
+```text
+            ┌────────────────────┐
+            │     User Input     │
+            │ (Image + Query)   │
+            └─────────┬──────────┘
+                      │
+                      ▼
+            ┌────────────────────┐
+            │      Planning      │
+            │ (LLM Reasoning)    │
+            └─────────┬──────────┘
+                      │
+                      ▼
+            ┌────────────────────┐
+            │    Tool Usage      │
+            │ ┌───────────────┐  │
+            │ │ GroundingDINO │  │
+            │ │ Depth Model   │  │
+            │ │ Search APIs   │  │
+            │ └───────────────┘  │
+            └─────────┬──────────┘
+                      │
+                      ▼
+            ┌────────────────────┐
+            │    Observation     │
+            │ (Aggregate Info)   │
+            └─────────┬──────────┘
+                      │
+                      ▼
+            ┌────────────────────┐
+            │   Final Caption    │
+            └────────────────────┘
+
+🔧 Tools & Models Used
+GroundingDINO → Object detection & localization
+Depth-Anything-V2 → Depth estimation
+LLMs (GPT-4o or similar) → Planning & caption generation
+Google Search / Lens (Optional) → External knowledge
+🔄 Workflow Example
+
+Input:
+
+User: "Describe this image"
+
+Process:
+
+Plan → detect objects, scene, depth
+Call tools → extract structured visual info
+Refine instruction
+Generate caption
+
+Output:
+
+"A brown dog playing with a ball in the foreground of a park, with trees and people in the background."
+⚙️ Installation
+1. Clone Repository
+git clone <repo-url>
+cd CapAgent
+2. Create Environment
 conda create -n capagent python=3.10
 conda activate capagent
 pip install -r requirements.txt
-```
-
-### Install expert models
-We use seperated conda environment to install the expert models and deploy the gradioserver.
-```bash
-mkdir expert_models
+3. Set API Keys
+export OPENAI_API_KEY=<your-openai-api-key>
+export SERP_API_KEY=<your-serp-api-key>  # optional
+🧪 Install Expert Models
+GroundingDINO
 cd expert_models
-
-# install GroundingDINO
 git clone https://github.com/IDEA-Research/GroundingDINO.git
 cd GroundingDINO
+
 conda create -n groundingdino python=3.10
 conda activate groundingdino
 pip install -e .
-cd ../expert_models/client
-python detection.py
-
-# install Depth-Anything-V2
+Depth-Anything-V2
+cd ../
 git clone https://github.com/DepthAnything/Depth-Anything-V2.git
 cd Depth-Anything-V2
+
 conda create -n depthanything python=3.10
 conda activate depthanything
 pip install -e .
+
 python app.py
-
-
-# let the gradio server running and test the gradio client
-```bash
-conda activate capagent
-cd expert_models/client
-python test_client.py
-```
-
-### Generate CoT examples embedding
-```bash
-bash init_rag_database.sh
-```
-
-### Launch server
-To let local image online for allowing api, e.g., google search, using url access the image.
-```bash
+▶️ Running the Project
+Start Image Server
 python launch_image_server.py
-```
-After launching the image server, you need to do intranet penetration to let the api can access the image.
-
-## Run CapAgent
-### Inference on a single image
-```bash
+Run Inference
 python run.py
-```
-
-### Gradio Demo
-```bash
+Gradio Demo
 python gradio_demo.py
-``` 
+🧠 RAG Setup
 
-**Generate a professional instruction**
+Generate embeddings for Chain-of-Thought examples:
 
-You can input a simple instruction and generate a professional instruction for image captioning. 
+bash init_rag_database.sh
+📊 Advantages
+✅ High-quality captions
+✅ Better reasoning using tools
+✅ Modular and scalable
+✅ Improved controllability
+⚠️ Limitations
+❌ Higher latency due to multiple tool calls
+❌ Increased system complexity
+❌ Higher cost (LLM + APIs + models)
+❌ Error propagation across tools
+🔮 Future Work
+Add more expert tools (segmentation, OCR, etc.)
+Improve reasoning with advanced agent frameworks
+Optimize latency and cost
+Extend to video and multi-image understanding
 
-**Use Google Search and Google Lens**
-
-If you want to use the search function, please turn on the "Use Google Search and Google Lens" toggle. This can help you generate a more accurate instruction for image captioning. Which allow the image caption contain more accurate information.
-
-<div align="center">
-<img src="assets/readme/gradio_demo.png"/>
-</div>
-
-## Video Demo
-
-[![CapAgent](https://img.youtube.com/vi/YU1_dNeZr6Q/0.jpg)](https://www.youtube.com/watch?v=YU1_dNeZr6Q)
-
-
-# Acknowledgement
-
-We would like to thank the authors of following awesome works:
-- [GroundingDINO](https://github.com/IDEA-Research/GroundingDINO)
-- [Depth-Anything-V2](https://depth-anything-v2.github.io/)
-- [VisualSketchPad](https://visualsketchpad.github.io/)
-
-## Contact
-Contact me if you have any questions. Email: wangxr@bupt.edu.cn
-
-## Citation
-If you find this work helpful, please consider giving it a star and citing our technical report: 
-```
-@misc{wang2024simpleprofessionalcombinatorialcontrollable,
-      title={From Simple to Professional: A Combinatorial Controllable Image Captioning Agent}, 
-      author={Xinran Wang and Muxi Diao and Baoteng Li and Haiwen Zhang and Kongming Liang and Zhanyu Ma},
-      year={2024},
-      eprint={2412.11025},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2412.11025}, 
-}
-```
+🙌 Acknowledgements
+GroundingDINO
+Depth-Anything-V2
+VisualSketchPad
